@@ -1,39 +1,48 @@
-<!DOCTYPE html>
 <html lang="fr">
     <head>
         <title>My_H5AI</title>
-        <link href="Styles/style.css" rel="stylesheet">
+        <link href="/Projet/h5ai/Styles/style.css" rel="stylesheet">
     </head>
     <body>
 
         <div class="arrow-bow">
             <span>&#8249;</span>
             <span>&#8250;</span>
-        </div
+        </div>
 
         <?php
-            $path = './';
+            $path = '.';
             if(isset($_GET['path'])) {
                 $path = $_GET['path'];
             }
-            echo $_GET['path'].'<br>';
-            $dir = scandir($path);
+
+            echo $path.'<br>';
 
             $icon= array(
-                "dir" => "./img/folder-solid.svg",
-                ".php" => "./img/php-brands.svg",
-                ".html" => "./img/html5-brands.svg",
-                ".txt" => "./img/txt-brands.svg",
+                "" => "/Projet/h5ai/icon/dir-icon.png",
+                "php" => "/Projet/h5ai/icon/php-icon.png",
+                "git" => "/Projet/h5ai/icon/git-icon.png",
+                "htaccess" => "/Projet/h5ai/icon/htaccess-icon.png",
+                "png" => "/Projet/h5ai/icon/png-icon.png",
+                "js" => "/Projet/h5ai/icon/js-icon.png",
+                "css" => "/Projet/h5ai/icon/css-icon.png"
             );
-            echo '<table><tr><td>Name</td><td>Size</td><td>Last modification</td></tr>';
+
+            $dir = scandir($path);
+            echo '<table><tr><td></td></td><td>Name</td><td>Size</td><td>Last modification</td></tr>';
+
             foreach ($dir as $path) {
+                $iconextent = pathinfo($path, PATHINFO_EXTENSION);
                 echo '<tr>';
+                echo '<td><img src="'.$icon[$iconextent].'" alt="icon"></td>';
                 echo '<td><a href="'.$path.'">'.$path.'</a></td>';
                 echo '<td>'.filesize($path).'   octet(s)</td>';
                 echo '<td>'.date("d/m/Y H:i:s.",filectime($path)).'</td>';
                 echo '</tr>';
             }
             echo '</table>';
+
+
 
         ?>
     <script src="./Scripts/directionArrow.js"></script>
