@@ -1,7 +1,8 @@
 <html lang="fr">
     <head>
         <title>My_H5AI</title>
-        <link href="/Projet/h5ai/Styles/style.css" rel="stylesheet">
+        <link href="/Projet/h5ai/Styles/style.css" rel="stylesheet"/>
+        <link href="/Projet/h5ai/icon/favicon.ico" rel="icon"/>
     </head>
     <body>
 
@@ -18,26 +19,28 @@
 
             echo $path.'<br>';
 
-            $icon= array(
+            $iconArray= array(
                 "" => "/Projet/h5ai/icon/dir-icon.png",
-                "php" => "/Projet/h5ai/icon/php-icon.png",
-                "git" => "/Projet/h5ai/icon/git-icon.png",
-                "htaccess" => "/Projet/h5ai/icon/htaccess-icon.png",
-                "png" => "/Projet/h5ai/icon/png-icon.png",
-                "js" => "/Projet/h5ai/icon/js-icon.png",
-                "css" => "/Projet/h5ai/icon/css-icon.png"
             );
+
+            $iconDir = './icon';
+            $icon = scandir($iconDir);
+            foreach($icon as $img){
+                $image = explode('-', $img);
+                $iconArray[$image[0]] = "/Projet/h5ai/icon/".$image[0]."-icon.png";
+            }
 
             $dir = scandir($path);
             echo '<table><tr><td></td></td><td>Name</td><td>Size</td><td>Last modification</td></tr>';
 
-            foreach ($dir as $path) {
-                $iconextent = pathinfo($path, PATHINFO_EXTENSION);
+            foreach ($dir as $file) {
+                $iconextent = pathinfo($file, PATHINFO_EXTENSION);
+                $files = $path.'/'.$file;
                 echo '<tr>';
-                echo '<td><img src="'.$icon[$iconextent].'" alt="icon"></td>';
-                echo '<td><a href="'.$path.'">'.$path.'</a></td>';
-                echo '<td>'.filesize($path).'   octet(s)</td>';
-                echo '<td>'.date("d/m/Y H:i:s.",filectime($path)).'</td>';
+                echo '<td><img src="'.$iconArray[$iconextent].'" alt="icon"></td>';
+                echo '<td><a href="'.$file.'">'.$file.'</a></td>';
+                echo '<td>'.filesize($files).'   octet(s)</td>';
+                echo '<td>'.date("d/m/Y H:i:s.",filectime($files)).'</td>';
                 echo '</tr>';
             }
             echo '</table>';
