@@ -31,23 +31,32 @@
             }
 
             $dir = scandir($path);
-            echo '<table><tr><td></td></td><td>Name</td><td>Size</td><td>Last modification</td></tr>';
-
-            foreach ($dir as $file) {
+            echo '<table><tr><td></td></td><td>Name</td><td>Size</td><td>Last modification</td><td>Tag</td></tr>';
+            for($i = 0; $i < count($dir); $i++) {
+                $file = $dir[$i];
                 $iconextent = pathinfo($file, PATHINFO_EXTENSION);
-                $files = $path.'/'.$file;
+                $files = $path . '/' . $file;
                 echo '<tr>';
-                echo '<td><img src="'.$iconArray[$iconextent].'" alt="icon"></td>';
-                echo '<td><a href="'.$file.'">'.$file.'</a></td>';
-                echo '<td>'.filesize($files).'   octet(s)</td>';
-                echo '<td>'.date("d/m/Y H:i:s.",filectime($files)).'</td>';
+                echo '<td><img src="' . $iconArray[$iconextent] . '" alt="icon"></td>';
+                echo '<td><a href="' . $file . '">' . $file . '</a></td>';
+                echo '<td>' . filesize($files) . '   octet(s)</td>';
+                echo '<td>' . date("d/m/Y H:i:s.", filectime($files)) . '</td>';
+                echo '<td><button class="add-tag" onclick="addTag()">+</button><span id="Tags"></span></td>';
                 echo '</tr>';
             }
-            echo '</table>';
-
-
-
         ?>
-    <script src="./Scripts/directionArrow.js"></script>
+
+        <script>
+            function addTag(){
+                let addTag = prompt('Quel tag souhaitez-vous ajouter ?');
+
+                //document.getElementById("Tags").innerHTML = addTag;
+
+                var count = <?php echo json_encode(count($dir))?>
+                for(var i = 0; i > count; i++ ){
+                    document.getElementById("Tags").innerHTML = addTag;
+                }
+            }
+        </script>
     </body>
 </html>
